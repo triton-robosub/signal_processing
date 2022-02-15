@@ -1,0 +1,12 @@
+function thresh = cdf_sig(x, n, k)
+    bins = zeros(1, 1000);
+    for i = 1:n
+        %bins(round(x(i) * 100 + 1000)) = bins(round(x(i) * 100 + 1000)) + 1/n;
+        for j = ceil(abs(x(i)) * 100 + 10):1000
+            bins(j) = bins(j) + 1/n;
+        end
+    end
+    m = max(x,[],'all');
+    sd = (bins.*(1 - bins)./n).^(1/2);
+    sd = (m / 2) + sd;
+    thresh = max(sd, [], 'all')
